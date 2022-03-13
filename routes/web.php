@@ -21,6 +21,7 @@ Route::group(
         Route::get('dashboard', 'DashboardController@index');
         
         Route::resource('categories', 'CategoryController');
+        Route::resource('products', 'ProductController');
     }
 );
 
