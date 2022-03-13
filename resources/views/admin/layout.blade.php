@@ -127,30 +127,16 @@
     <script src='{{ URL::asset('admin/assets/plugins/daterangepicker/moment.min.js') }}'></script>
     <script src='{{ URL::asset('admin/assets/plugins/daterangepicker/daterangepicker.js') }}'></script>
     <script src='{{ URL::asset('admin/assets/js/date-range.js') }}'></script>
-
-    
-
-    
-    
-    
-    
-
     <script src='{{ URL::asset('admin/assets/plugins/toastr/toastr.min.js') }}'></script>
-
-    
-
-    
-    
-    
-
-    
-    
-
-    
-
     <script src="{{ URL::asset('admin/assets/js/sleek.js') }}"></script>
-  <link href="{{ URL::asset('admin/assets/options/optionswitch.css') }}" rel="stylesheet">
-<script src="{{ URL::asset('admin/assets/options/optionswitcher.js') }}"></script>
+    <link href="{{ URL::asset('admin/assets/options/optionswitch.css') }}" rel="stylesheet">
+    <script src="{{ URL::asset('admin/assets/options/optionswitcher.js') }}"></script>
+
+    <script>
+      $('.delete').on("submit", function () {
+        return confirm("Do you want to remove this?");
+      });
+    </script>
 </body>
 </html>
 
