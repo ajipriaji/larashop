@@ -13,6 +13,7 @@
                         <h2>{{ $formTitle }} Category</h2>
                 </div>
                 <div class="card-body">
+                    @include('admin.partials.flash')
                     <form action="{{ url('admin/categories') }}" method="POST">
                     @csrf
                         <div class="form-group">
@@ -22,6 +23,7 @@
                         
                         <div class="form-footer pt-5 border-top">
                             <button type="submit" class="btn btn-primary btn-default">Add</button>
+                            <a href="{{ url('admin/categories') }}" class="btn btn-secondary">Back</a>
                         </div>
                     </form>
                 </div>

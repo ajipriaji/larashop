@@ -75,7 +75,7 @@ class CategoryController extends Controller
 
         $this->data['category'] = $category;
 
-        return view('admin.categories.edit_form', $this->data);
+        return view('admin.categories.form', $this->data);
     }
 
     /**
