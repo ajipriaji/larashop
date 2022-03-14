@@ -26,15 +26,23 @@
                                         <td>{{ $attribute->name }}</td>
                                         <td>{{ $attribute->type }}</td>
                                         <td>
-                                            <a href="{{ url('admin/attributes/'. $attribute->id .'/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                            @if ($attribute->type == 'select')
-                                            <a href="{{ url('admin/attributes/'. $attribute->id .'/options') }}" class="btn btn-success btn-sm">Options</a>
-                                            @endif
-                                            <form action="{{ url('admin/attributes/'. $attribute->id) }}" method="POST" style="display:inline-block" class="delete">
-                                                @method('delete')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                            </form>
+                                            @can('edit_attributes')
+                                                <a href="{{ url('admin/attributes/'. $attribute->id .'/edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                                            @endcan
+
+                                            @can('add_attributes')
+                                                @if ($attribute->type == 'select')
+                                                <a href="{{ url('admin/attributes/'. $attribute->id .'/options') }}" class="btn btn-success btn-sm">Options</a>
+                                                @endif
+                                            @endcan
+
+                                            @can('delete_attributes')
+                                                <form action="{{ url('admin/attributes/'. $attribute->id) }}" method="POST" style="display:inline-block" class="delete">
+                                                    @method('delete')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty
@@ -46,9 +54,11 @@
                         </table>
                         {{ $attributes->links() }}
                     </div>
-                    <div class="card-footer text-right">
-                        <a href="{{ url('admin/attributes/create') }}" class="btn btn-primary">Add New</a>
-                    </div>
+                    @can('add_attributes')
+                        <div class="card-footer text-right">
+                            <a href="{{ url('admin/attributes/create') }}" class="btn btn-primary">Add New</a>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>

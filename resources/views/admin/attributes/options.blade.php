@@ -24,12 +24,17 @@
                                         <td>{{ $option->id }}</td>
                                         <td>{{ $option->name }}</td>
                                         <td>
-                                            <a href="{{ url('admin/attributes/options/'. $option->id .'/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                            <form action="{{ url('admin/attributes/options/'. $option->id) }}" method="POST" style="display:inline-block" class="delete">
-                                                @method('delete')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                            </form>
+                                            @can('edit_attributes')
+                                                <a href="{{ url('admin/attributes/options/'. $option->id .'/edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                                            @endcan
+                                            
+                                            @can('delete_attributes')
+                                                <form action="{{ url('admin/attributes/options/'. $option->id) }}" method="POST" style="display:inline-block" class="delete">
+                                                    @method('delete')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty

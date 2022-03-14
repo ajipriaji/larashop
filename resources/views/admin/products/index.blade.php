@@ -30,26 +30,31 @@
                                         <td>{{ number_format($product->price) }}</td>
                                         <td>{{ $product->status_label() }}</td>
                                         <td>
-                                            <a href="{{ url('admin/products/'. $product->id .'/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                            <form action="{{ url('admin/products/'. $product->id) }}" method="POST" style="display:inline-block" class="delete">
-                                            @method('delete')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                            </form>
+                                            <a href="{{ url('admin/products/'. $product->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
+                                            
+                                            @can('delete_products')     
+                                                <form action="{{ url('admin/products/'. $product->id) }}" method="POST" style="display:inline-block" class="delete">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6">No records found</td>
+                                        <td colspan="7">No records found</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                         {{ $products->links() }}
                     </div>
-                    <div class="card-footer text-right">
-                        <a href="{{ url('admin/products/create') }}" class="btn btn-primary">Add New</a>
-                    </div>
+                    @can('add_products')
+                        <div class="card-footer text-right">
+                            <a href="{{ url('admin/products/create') }}" class="btn btn-primary">Add New</a>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>

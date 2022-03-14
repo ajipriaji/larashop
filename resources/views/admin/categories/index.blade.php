@@ -26,12 +26,17 @@
                                 <td>{{ $category->slug }}</td>
                                 <td>{{ $category->parent ? $category->parent->name : '' }}</td>
                                 <td>
-                                    <a href="{{ url('admin/categories/'. $category->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
-                                    <form action="{{ url('admin/categories/'. $category->id) }}" method="POST" style="display:inline-block" class="delete">
-                                    @method('delete')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
+                                    @can('edit_categories')
+                                        <a href="{{ url('admin/categories/'. $category->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
+                                    @endcan
+
+                                    @can('delete_categories')
+                                        <form action="{{ url('admin/categories/'. $category->id) }}" method="POST" style="display:inline-block" class="delete">
+                                        @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @empty
@@ -43,9 +48,11 @@
                 </table>
                 {{ $categories->links() }}
             </div>
-            <div class="card-footer text-right">
-                <a href="{{ url('admin/categories/create') }}" class="btn btn-primary">Add New</a>
-            </div>
+            @can('add_categories')
+                <div class="card-footer text-right">
+                    <a href="{{ url('admin/categories/create') }}" class="btn btn-primary">Add New</a>
+                </div>
+            @endcan
         </div>
     </div>
 </div>

@@ -8,12 +8,15 @@ use App\Http\Requests\AttributeRequest;
 use App\Http\Requests\AttributeOptionRequest;
 
 use Illuminate\Support\Facades\Session;
+use App\Authorizable;
 
 use App\Models\Attribute;
 use App\Models\AttributeOption;
 
 class AttributeController extends Controller
 {
+    use Authorizable;
+    
     public function __construct()
     {
         $this->data['types'] = Attribute::types();
