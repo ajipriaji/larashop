@@ -30,7 +30,7 @@
                                         <td>{{ number_format($product->price) }}</td>
                                         <td>{{ $product->status_label() }}</td>
                                         <td>
-                                            @can('edit_product')
+                                            @can('edit_products')
                                                 <a href="{{ url('admin/products/'. $product->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
                                             @endcan
                                             
