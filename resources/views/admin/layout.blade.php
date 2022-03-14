@@ -20,15 +20,7 @@
     <!-- No Extra plugin used -->
     <link href='{{ URL::asset('admin/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css') }}' rel='stylesheet'>
     <link href='{{ URL::asset('admin/assets/plugins/daterangepicker/daterangepicker.css') }}' rel='stylesheet'>
-    
-    
     <link href='{{ URL::asset('admin/assets/plugins/toastr/toastr.min.css') }}' rel='stylesheet'>
-    
-    
-    
-    
-    
-    
 
     <!-- SLEEK CSS -->
     <link id="sleek-css" rel="stylesheet" href="{{ URL::asset('admin/assets/css/sleek.css') }}" />
@@ -61,7 +53,7 @@
     <div class="wrapper">
 
       <!-- Github Link -->
-      <a href="https://github.com/tafcoder/sleek-dashboard"  target="_blank" class="github-link">
+      {{-- <a href="https://github.com/tafcoder/sleek-dashboard"  target="_blank" class="github-link">
         <svg width="70" height="70" viewBox="0 0 250 250" aria-hidden="true">
           <defs>
             <linearGradient id="grad1" x1="0%" y1="75%" x2="100%" y2="0%">
@@ -72,7 +64,7 @@
           <path d="M 0,0 L115,115 L115,115 L142,142 L250,250 L250,0 Z" fill="url(#grad1)"></path>
         </svg>
         <i class="mdi mdi-github-circle"></i>
-      </a>
+      </a> --}}
 
         {{-- SideBar --}}
         @include('admin.partials.sidebar')
@@ -113,17 +105,11 @@
     <script src="{{ URL::asset('admin/assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ URL::asset('admin/assets/plugins/simplebar/simplebar.min.js') }}"></script>
- 
     <script src='{{ URL::asset('admin/assets/plugins/charts/Chart.min.js') }}'></script>
     <script src='{{ URL::asset('admin/assets/js/chart.js') }}'></script>
-
-    
-    
-
     <script src='{{ URL::asset('admin/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js') }}'></script>
     <script src='{{ URL::asset('admin/assets/plugins/jvectormap/jquery-jvectormap-world-mill.js') }}'></script>
     <script src='{{ URL::asset('admin/assets/js/vector-map.js') }}'></script>
-
     <script src='{{ URL::asset('admin/assets/plugins/daterangepicker/moment.min.js') }}'></script>
     <script src='{{ URL::asset('admin/assets/plugins/daterangepicker/daterangepicker.js') }}'></script>
     <script src='{{ URL::asset('admin/assets/js/date-range.js') }}'></script>
