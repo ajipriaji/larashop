@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+	use SoftDeletes;
+
     protected $fillable = [
 		'user_id',
 		'code',
@@ -38,6 +41,8 @@ class Order extends Model
 		'cancelled_at',
 		'cancellation_note',
 	];
+
+	protected $appends = ['customer_full_name'];
 	
 	public const CREATED = 'created';
 	public const CONFIRMED = 'confirmed';
@@ -50,41 +55,30 @@ class Order extends Model
 	public const PAID = 'paid';
 	public const UNPAID = 'unpaid';
 
-	/**
-	 * Define relationship with the Shipment
-	 *
-	 * @return void
-	 */
+	public const STATUSES = [
+		self::CREATED => 'Created',
+		self::CONFIRMED => 'Confirmed',
+		self::DELIVERED => 'Delivered',
+		self::COMPLETED => 'Completed',
+		self::CANCELLED => 'Cancelled',
+	];
+
 	public function shipment()
 	{
 		return $this->hasOne('App\Models\Shipment');
 	}
 
-	/**
-	 * Define relationship with the OrderItem
-	 *
-	 * @return void
-	 */
+
 	public function orderItems()
 	{
 		return $this->hasMany('App\Models\OrderItem');
 	}
 
-	/**
-	 * Define relationship with the User
-	 *
-	 * @return void
-	 */
 	public function user()
 	{
 		return $this->belongsTo('App\Models\User');
 	}
 
-	/**
-	 * Generate order code
-	 *
-	 * @return string
-	 */
 	public static function generateCode()
 	{
 		$dateCode = self::ORDERCODE . '/' . date('Ymd') . '/' .\General::integerToRoman(date('m')). '/' .\General::integerToRoman(date('d')). '/';
@@ -110,13 +104,6 @@ class Order extends Model
 		return $orderCode;
 	}
 
-	/**
-	 * Check if the generated order code is exists
-	 *
-	 * @param string $orderCode order code
-	 *
-	 * @return void
-	 */
 	private static function _isOrderCodeExists($orderCode)
 	{
 		return Order::where('code', '=', $orderCode)->exists();
@@ -125,5 +112,35 @@ class Order extends Model
 	public function isPaid()
 	{
 		return $this->payment_status == self::PAID;
+	}
+
+	public function isCreated()
+	{
+		return $this->status == self::CREATED;
+	}
+
+	public function isConfirmed()
+	{
+		return $this->status == self::CONFIRMED;
+	}
+
+	public function isDelivered()
+	{
+		return $this->status == self::DELIVERED;
+	}
+
+	public function isCompleted()
+	{
+		return $this->status == self::COMPLETED;
+	}
+
+	public function isCancelled()
+	{
+		return $this->status == self::CANCELLED;
+	}
+
+	public function getCustomerFullNameAttribute()
+	{
+		return "{$this->customer_first_name} {$this->customer_last_name}";
 	}
 }

@@ -97,7 +97,7 @@ return [
     // 'password' => env('MAIL_PASSWORD'),
     'username' => 'ajipriaji10@student.uns.ac.id',
 
-    'password' => 'ekmuvyrdfwonptzc',
+    'password' => 'crzjmujysredkmls',
 
     /*
     |--------------------------------------------------------------------------
