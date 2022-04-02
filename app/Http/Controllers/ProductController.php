@@ -60,7 +60,7 @@ class ProductController extends Controller
 		$products = $this->filterProductsByAttribute($products, $request);
 		$products = $this->sortProducts($products, $request);
 
-		$this->data['products'] = $products->paginate(9);
+		$this->data['products'] = $products->paginate(10);
 		return $this->load_theme('products.index', $this->data);
 	}
 
@@ -163,7 +163,7 @@ class ProductController extends Controller
 			return redirect('products');
 		}
 
-		if ($product->type == 'configurable') {
+		if ($product->configurable()) {
 			$this->data['colors'] = ProductAttributeValue::getAttributeOptions($product, 'color')->pluck('text_value', 'text_value');
 			$this->data['sizes'] = ProductAttributeValue::getAttributeOptions($product, 'size')->pluck('text_value', 'text_value');
 		}
@@ -171,6 +171,19 @@ class ProductController extends Controller
 		$this->data['product'] = $product;
 
 		return $this->load_theme('products.show', $this->data);
+	}
+
+	public function quickView($slug)
+	{
+		$product = Product::active()->where('slug', $slug)->firstOrFail();
+		if ($product->configurable()) {
+			$this->data['colors'] = ProductAttributeValue::getAttributeOptions($product, 'color')->pluck('text_value', 'text_value');
+			$this->data['sizes'] = ProductAttributeValue::getAttributeOptions($product, 'size')->pluck('text_value', 'text_value');
+		}
+
+		$this->data['product'] = $product;
+		
+		return $this->loadTheme('products.quick_view', $this->data);
 	}
 
 }

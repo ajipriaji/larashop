@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+use App\Models\ProductInventory;
 
 class CartController extends Controller
 {
@@ -67,6 +68,9 @@ class CartController extends Controller
 			$attributes['size'] = $params['size'];
 			$attributes['color'] = $params['color'];
 		}
+		
+		$itemQuantity =  $this->_getItemQuantity(md5($product->id)) + $params['qty'];
+		$this->_checkProductInventory($product, $itemQuantity);
 
 		$item = [
 			'id' => md5($product->id),
@@ -83,6 +87,36 @@ class CartController extends Controller
 		return redirect('/product/'. $slug);
 	}
 
+	private function _getItemQuantity($itemId)
+	{
+		$items = \Cart::getContent();
+		$itemQuantity = 0;
+		if ($items) {
+			foreach ($items as $item) {
+				if ($item->id == $itemId) {
+					$itemQuantity = $item->quantity;
+					break;
+				}
+			}
+		}
+
+		return $itemQuantity;
+	}
+
+	private function _checkProductInventory($product, $itemQuantity)
+	{
+		if ($product->productInventory->qty < $itemQuantity) {
+			throw new \App\Exceptions\OutOfStockException('The product '. $product->sku .' is out of stock');
+		}
+	}
+
+	private function _getCartItem($cartID)
+	{
+		$items = \Cart::getContent();
+
+		return $items[$cartID];
+	}
+
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -96,12 +130,18 @@ class CartController extends Controller
 
 		if ($items = $params['items']) {
 			foreach ($items as $cartID => $item) {
-				\Cart::update($cartID, [
-					'quantity' => [
-						'relative' => false,
-						'value' => $item['quantity'],
-					],
-				]);
+				$cartItem = $this->_getCartItem($cartID);
+				$this->_checkProductInventory($cartItem->associatedModel, $item['quantity']);
+
+				\Cart::update(
+					$cartID,
+					[
+						'quantity' => [
+							'relative' => false,
+							'value' => $item['quantity'],
+						],
+					]
+				);
 			}
 
 			\Session::flash('success', 'The cart has been updated');

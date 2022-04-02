@@ -23,7 +23,7 @@
             </div>
             <div class="product-list-cart-wishlist">
                 <div class="product-list-cart">
-                    <a class="btn-hover list-btn-style" href="#">add to cart</a>
+                    <a class="btn-hover list-btn-style add-to-card" href=""  product-id="{{ $product->id }}" product-type="{{ $product->type }}" product-slug="{{ $product->slug }}">add to cart</a>
                 </div>
                 <div class="product-list-wishlist">
                     <a class="btn-hover list-btn-wishlist" href="#">

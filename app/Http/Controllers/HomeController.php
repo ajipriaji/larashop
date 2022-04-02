@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // return view('themes.ezone.home');
-        return $this->load_theme('home');
+        $products = Product::popular()->get();
+		$this->data['products'] = $products;
+        
+        return $this->load_theme('home', $this->data);
     }
 }

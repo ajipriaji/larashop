@@ -23,6 +23,23 @@ class Product extends Model
         'status',
     ];
 
+    public const DRAFT = 0;
+	public const ACTIVE = 1;
+	public const INACTIVE = 2;
+
+	public const STATUSES = [
+		self::DRAFT => 'draft',
+		self::ACTIVE => 'active',
+		self::INACTIVE => 'inactive',
+	];
+
+	public const SIMPLE = 'simple';
+	public const CONFIGURABLE = 'configurable';
+	public const TYPES = [
+		self::SIMPLE => 'Simple',
+		self::CONFIGURABLE => 'Configurable',
+	];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
@@ -58,13 +75,14 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductImage')->orderBy('id', 'desc');
     }
 
+    public function orderItems()
+	{
+		return $this->hasMany('App\Models\OrderItem');
+	}
+
     public static function statuses()
     {
-        return [
-            0 => 'draft',
-            1 => 'active',
-            2 => 'inactive',
-        ];
+        return self::STATUSES;
     }
 
     function status_label()
@@ -75,18 +93,34 @@ class Product extends Model
     }
 
     public static function types()
-    {
-        return [
-            'simple' => 'Simple',
-            'configurable' => 'Configurable',
-        ];
-    }
+	{
+		return self::TYPES;
+	}
 
     public function scopeActive($query)
     {
         return $query->where('status', 1)
                 ->where('parent_id', NULL);
     }
+
+    public function scopePopular($query, $limit = 10)
+	{
+		$month = now()->format('m');
+
+		return $query->selectRaw('products.*, COUNT(order_items.id) as total_sold')
+			->join('order_items', 'order_items.product_id', '=', 'products.id')
+			->join('orders', 'order_items.order_id', '=', 'orders.id')
+			->whereRaw(
+				'orders.status = :order_satus AND MONTH(orders.order_date) = :month',
+				[
+					'order_status' => Order::COMPLETED,
+					'month' => $month
+				]
+			)
+			->groupBy('products.id')
+			->orderByRaw('total_sold DESC')
+			->limit($limit);
+	}
 
     function price_label()
     {
