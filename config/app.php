@@ -180,7 +180,8 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,        
         Laracasts\Flash\FlashServiceProvider::class,
-        Darryldecode\Cart\CartServiceProvider::class,        
+        Darryldecode\Cart\CartServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class, 
 
     ],
 
@@ -235,6 +236,7 @@ return [
         
         'General' => App\Helpers\General::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

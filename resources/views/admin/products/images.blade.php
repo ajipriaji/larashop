@@ -25,14 +25,13 @@
                             @forelse ($productImages as $image)
                                 <tr>    
                                     <td>{{ $image->id }}</td>
-                                    <td><img src="{{ asset('storage/'.$image->path) }}" style="width:150px"/></td>
+                                    <td><img src="{{ asset('storage/'.$image->small) }}" style="width:100px"/></td>
                                     <td>{{ $image->created_at }}</td>
                                     <td>
-                                        <form action="{{ url('admin/products/images/'. $image->id) }}" method="POST" style="display:inline-block" class="delete">
-                                        @method('delete')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
+                                        {!! Form::open(['url' => 'admin/products/images/'. $image->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
+                                        {!! Form::hidden('_method', 'DELETE') !!}
+                                        {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!}
+                                        {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @empty

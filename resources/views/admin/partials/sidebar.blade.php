@@ -44,12 +44,12 @@
 					</ul>
 				</li>
 				<li  class="has-sub {{ ($currentAdminMenu == 'order') ? 'expand active' : ''}}">
-					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#order"
+					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#orders"
 						aria-expanded="false" aria-controls="dashboard">
 						<i class="mdi mdi-cart-outline"></i>
 						<span class="nav-text">Orders</span> <b class="caret"></b>
 					</a>
-					<ul class="collapse {{ ($currentAdminMenu == 'order') ? 'show' : ''}}"  id="order"
+					<ul class="collapse {{ ($currentAdminMenu == 'order') ? 'show' : ''}}"  id="orders"
 						data-parent="#sidebar-menu">
 						<div class="sub-menu">
 							<li  class="{{ ($currentAdminSubMenu == 'order') ? 'active' : ''}}" >
