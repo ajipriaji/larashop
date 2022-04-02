@@ -66,6 +66,7 @@
 	</div>
 
 	<script src="{{ URL::asset('admin/assets/plugins/jquery/jquery.min.js') }}"></script>
+	<script src="{{ URL::asset('admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ URL::asset('admin/assets/plugins/slimscrollbar/jquery.slimscroll.min.js') }}"></script>
 	<script src="{{ URL::asset('admin/assets/plugins/jekyll-search.min.js') }}"></script>
 	<script src="{{ URL::asset('admin/assets/plugins/charts/Chart.min.js') }}"></script>
