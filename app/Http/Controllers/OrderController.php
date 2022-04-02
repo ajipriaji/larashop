@@ -18,6 +18,37 @@ class OrderController extends Controller
 		$this->middleware('auth');
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index()
+	{
+		$orders = Order::forUser(\Auth::user())
+			->orderBy('created_at', 'DESC')
+			->paginate(10);
+
+		$this->data['orders'] = $orders;
+
+		return $this->load_theme('orders.index', $this->data);
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param int $id order ID
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id)
+	{
+		$order = Order::forUser(\Auth::user())->findOrFail($id);
+		$this->data['order'] = $order;
+
+		return $this->load_theme('orders.show', $this->data);
+	}
+
 	public function checkout()
 	{
 		if (\Cart::isEmpty()) {

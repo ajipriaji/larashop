@@ -49,7 +49,7 @@
 												<a href="{{ url('product/'. $product->slug) }}"><img src="{{ $image }}" alt="{{ $product->name }}" style="width:100px"></a>
 											</td>
 											<td class="product-name"><a href="{{ url('product/'. $product->slug) }}">{{ $product->name }}</a></td>
-											<td class="product-price-cart"><span class="amount">{{ number_format($product->priceLabel()) }}</span></td>
+											<td class="product-price-cart"><span class="amount">{{ number_format($product->price_label()) }}</span></td>
 										</tr>
 									@empty
 										<tr>
@@ -57,11 +57,9 @@
 										</tr>
 									@endforelse
                                 </tbody>
-                            </table>
+							</table>
+							{{ $favorites->links() }}
 						</div>
-					</div>
-					<div class="mt-50 text-center">
-						{{ $favorites->links() }}
 					</div>
 				</div>
 			</div>

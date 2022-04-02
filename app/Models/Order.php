@@ -79,6 +79,11 @@ class Order extends Model
 		return $this->belongsTo('App\Models\User');
 	}
 
+	public function scopeForUser($query, $user)
+	{
+		return $query->where('user_id', $user->id);
+	}
+
 	public static function generateCode()
 	{
 		$dateCode = self::ORDERCODE . '/' . date('Ymd') . '/' .\General::integerToRoman(date('m')). '/' .\General::integerToRoman(date('d')). '/';
